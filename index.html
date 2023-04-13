@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <img src="logo.png" alt="logo" />
+      <ul>
+        <li><a onclick="onClickSignUp()">SignUp</a></li>
+        <li><a onclick="onClickLogin()">Login</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="welcome">
+        <h1>Welcome</h1>
+        <button onclick="onClickLogin()">Login</button>
+        <button onclick="onClickSignUp()">Signup</button>
+      </div>
+      <div class="login">
+        <h1>Login</h1>
+        <div class="login-form">
+          <form onsubmit="onSubmitLoginForm(); return false;">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="login_username"
+              name="username"
+              placeholder="Your Username"
+              required="required"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="login_password"
+              name="password"
+              placeholder="Your Password"
+              required="required"
+            />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+      <div class="signup">
+        <h1>Signup</h1>
+        <div class="signup-form">
+          <form onsubmit="onSubmitSignUpForm(); return false;">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Choose a Username"
+              required="required"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="at least 8 characters (digits and letters only)"
+              minlength="8"
+              pattern="(?=.*\d)((?=.*[a-z])|(?=.*[A-Z])).{8,}"
+              title="must contain at least 8 characters (digits and letters only)"
+              required="required"
+            />
+            <label for="confirm_password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm_password"
+              name="confirm_password"
+              minlength="8"
+              placeholder="Password again"
+              pattern="(?=.*\d)((?=.*[a-z])|(?=.*[A-Z])).{8,}"
+              title="must contain at least 8 characters (digits and letters only)"
+              required="required"
+            />
+            <label for="first_name">First Name:</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              placeholder="First Name"
+              pattern="((?=.*[a-z])|(?=.*[A-Z])).{2,}"
+              title="must contain letters only"
+              required="required"
+            />
+            <label for="last_name">Last Name:</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              placeholder="Last Name"
+              pattern="((?=.*[a-z])|(?=.*[A-Z])).{2,}"
+              title="must contain letters only"
+              required="required"
+            />
+            <label for="email">E-mail:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@example.com"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              required="required"
+            />
+            <label for="birth_date">Birth Date:</label>
+            <input
+              type="date"
+              id="birth_date"
+              name="birth_date"
+              value="2018-07-22"
+              min="1970-01-01"
+              max="2022-12-31"
+              required="required"
+            />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
