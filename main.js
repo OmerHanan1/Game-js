@@ -1,3 +1,4 @@
+// on load page
 $(document).ready(function () {
     $("div.welcome").show();
     $("div.login").hide()
@@ -8,6 +9,8 @@ $(document).ready(function () {
 const admin_user = {username:"p",password:"testuser", first_name:"admin", last_name:"admin", email:"admin@admin.test", birth_date: "9/11/2002"}
 const users = [admin_user]
 
+
+// on click events
 function onClickLogin(){
     showLoginPage()
 }
@@ -16,22 +19,7 @@ function onClickSignUp(){
     showSignUpPage()
 }
 
-function showLoginPage(){
-    $("div.welcome").hide();
-    $("div.login").show();
-    $("div.signup").hide();
-}
-
-function showSignUpPage(){
-    $("div.welcome").hide();
-    $("div.login").hide()
-    $("div.signup").show();
-}
-
-function showGamePage(){
-    // 
-}
-
+// on form submit events
 function onSubmitSignUpForm(){
     const username = $("#username").val()
     const password = $("#password").val()
@@ -66,6 +54,25 @@ function onSubmitLoginForm(){
         }
     }
     alert("incorrect username")
+}
+
+
+// utils
+
+function showLoginPage(){
+    $("div.welcome").hide();
+    $("div.login").show();
+    $("div.signup").hide();
+}
+
+function showSignUpPage(){
+    $("div.welcome").hide();
+    $("div.login").hide()
+    $("div.signup").show();
+}
+
+function showGamePage(){
+    // 
 }
 
 function validate_details(username, password, confirm_password, first_name, last_name, email, birth_date){
@@ -114,5 +121,3 @@ function isLettersOnly(str) {
     }
     return true;
 }
-
- 
