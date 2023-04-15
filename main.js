@@ -1,12 +1,25 @@
 // on load page
+let modalShowing;
+
 $(document).ready(function () {
     $("div.welcome").show();
     $("div.login").hide()
     $("div.signup").hide();
+    $("div.game").hide();
+    $("div.modal").hide();
+    modalShowing = false
+});
+
+$(document).keyup(function(e) {
+    if (e.key === "Escape") { // escape key maps to keycode `27`
+        if(modalShowing){
+            closeModal()
+        }
+    }
 });
 
 // decalring users
-const admin_user = {username:"p",password:"testuser", first_name:"admin", last_name:"admin", email:"admin@admin.test", birth_date: "9/11/2002"}
+const admin_user = {username:"p",password:"testuser", first_name:"admin", last_name:"admin", email:"admin@admin.test", birth_date: "9/11/2001"}
 const users = [admin_user]
 
 
@@ -17,6 +30,14 @@ function onClickLogin(){
 
 function onClickSignUp(){
     showSignUpPage()
+}
+
+function onClickLogo(){
+    showWelcomePage()
+}
+
+function onClickAbout(){
+    showModal()
 }
 
 // on form submit events
@@ -63,16 +84,42 @@ function showLoginPage(){
     $("div.welcome").hide();
     $("div.login").show();
     $("div.signup").hide();
+    $("div.game").hide();
+    $("div.modal").hide();
 }
 
 function showSignUpPage(){
     $("div.welcome").hide();
     $("div.login").hide()
     $("div.signup").show();
+    $("div.game").hide();
+    $("div.modal").hide();
 }
 
 function showGamePage(){
-    // 
+    $("div.welcome").hide();
+    $("div.login").hide();
+    $("div.signup").hide();
+    $("div.game").show();
+    $("div.modal").hide();
+}
+
+function showWelcomePage(){
+    $("div.welcome").show();
+    $("div.login").hide();
+    $("div.signup").hide();
+    $("div.game").hide();
+    $("div.modal").hide();
+}
+
+function showModal(){
+    $("div.modal").show();
+    modalShowing = true
+}
+
+function closeModal(){
+    $("div.modal").hide();
+    modalShowing = false
 }
 
 function validate_details(username, password, confirm_password, first_name, last_name, email, birth_date){

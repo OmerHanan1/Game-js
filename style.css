@@ -1,6 +1,5 @@
 * {
   font-family: "Montserrat", sans-serif;
-  color: aliceblue;
 }
 
 body {
@@ -9,6 +8,8 @@ body {
   animation: gradient 15s ease infinite;
   height: 100vh;
   margin-top: 5%;
+  color: aliceblue;
+  margin: auto;
 }
 
 @keyframes gradient {
@@ -25,13 +26,48 @@ body {
 
 /* content div*/
 .content {
-  margin: 5%;
-  width: 80%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
   padding: 5%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* welcome div*/
+.welcome {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome button {
+  width: 190px;
+  margin: 10px;
+}
+
+.welcome button:hover {
+  background-color: #ffffffb7;
+}
+
+/* game div*/
+.game {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameCanvas {
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
 }
 
 /* navbar */
@@ -52,6 +88,10 @@ body {
 .navbar img {
   height: 50px;
   margin-right: 20px;
+}
+
+.navbar img:hover {
+  cursor: pointer;
 }
 
 .navbar ul {
@@ -209,8 +249,23 @@ select {
   padding: 20px;
 }
 
+/* footer div*/
+.footer {
+  margin: auto;
+  width: 80%;
+  padding: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Rounded border */
 hr.rounded {
   border-top: 8px solid rgb(207, 223, 224);
   border-radius: 5px;
+}
+
+.modal-content {
+  color: black;
 }
