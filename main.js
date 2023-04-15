@@ -1,5 +1,8 @@
+import {shoko} from "./game.js"
+import {validate_details} from "./form_validation.js"
+
 // on load page
-let modalShowing;
+let isModalShowing;
 
 $(document).ready(function () {
     $("div.welcome").show();
@@ -7,12 +10,13 @@ $(document).ready(function () {
     $("div.signup").hide();
     $("div.game").hide();
     $("div.modal").hide();
-    modalShowing = false
+    shoko()
+    isModalShowing = false
 });
 
 $(document).keyup(function(e) {
     if (e.key === "Escape") { // escape key maps to keycode `27`
-        if(modalShowing){
+        if(isModalShowing){
             closeModal()
         }
     }
@@ -23,22 +27,37 @@ const admin_user = {username:"p",password:"testuser", first_name:"admin", last_n
 const users = [admin_user]
 
 
-// on click events
-function onClickLogin(){
-    showLoginPage()
-}
+// click events
 
-function onClickSignUp(){
-    showSignUpPage()
-}
+// welcome page
+$("#login_button").click(() => showLoginPage())
+$("#signup_button").click(() => showSignUpPage())
 
-function onClickLogo(){
-    showWelcomePage()
-}
+// navbar
+$("#navbar_login_button").click(() => showLoginPage());
+$("#navbar_signup_button").click(() => showSignUpPage());
+$("#navbar_about_button").click(() => showModal());
+$("#navbar_logo_button").click(() => showWelcomePage());
 
-function onClickAbout(){
-    showModal()
-}
+// modal
+$("#close_modal_button_1").click(() => closeModal());
+$("#close_modal_button_2").click(() => closeModal());
+
+
+
+// form submition
+$("form.signup-form").submit((event) => {
+    event.preventDefault();
+    onSubmitSignUpForm();
+    return false;
+});
+
+$("form.login-form").submit((event) => {
+    event.preventDefault();
+    onSubmitLoginForm();
+    return false;
+});
+
 
 // on form submit events
 function onSubmitSignUpForm(){
@@ -50,10 +69,10 @@ function onSubmitSignUpForm(){
     const email = $("#email").val()
     const birth_date = $("#birth_date").val()
 
-    is_valid = validate_details(username, password, confirm_password, first_name, last_name, email, birth_date)
+    const is_valid = validate_details(username, password, confirm_password, first_name, last_name, email, birth_date)
     if (!is_valid) return
 
-    new_user = {username:username, password:password, first_name:first_name, last_name:last_name, email:email,birth_date:birth_date}
+    const new_user = {username:username, password:password, first_name:first_name, last_name:last_name, email:email,birth_date:birth_date}
     users.push(new_user)
     alert("signed up successfully")
     showLoginPage()
@@ -78,8 +97,7 @@ function onSubmitLoginForm(){
 }
 
 
-// utils
-
+// page navigation
 function showLoginPage(){
     $("div.welcome").hide();
     $("div.login").show();
@@ -114,57 +132,10 @@ function showWelcomePage(){
 
 function showModal(){
     $("div.modal").show();
-    modalShowing = true
+    isModalShowing = true
 }
 
 function closeModal(){
     $("div.modal").hide();
-    modalShowing = false
-}
-
-function validate_details(username, password, confirm_password, first_name, last_name, email, birth_date){
-    if (!isAlphaNumeric(password)){
-        alert("password must contain at least 8 characters (digits and letters only)")
-        return false
-    }
-    if (password!==confirm_password){
-        alert("password must match confirm password")
-        return false
-    }
-    if (!isLettersOnly(first_name)){
-        alert("first name must contain letters only")
-        return false
-    }
-    if (!isLettersOnly(last_name)){
-        alert("last name must contain letters only")
-        return false
-    }
-    return true
-}
-
-function isAlphaNumeric(str) {
-    var code, i, len;
-
-    for (i = 0, len = str.length; i < len; i++) {
-        code = str.charCodeAt(i);
-        if (!(code > 47 && code < 58) && // numeric (0-9)
-            !(code > 64 && code < 91) && // upper alpha (A-Z)
-            !(code > 96 && code < 123)) { // lower alpha (a-z)
-        return false;
-        }
-    }
-    return true;
-}
-
-function isLettersOnly(str) {
-    var code, i, len;
-
-    for (i = 0, len = str.length; i < len; i++) {
-        code = str.charCodeAt(i);
-        if (!(code > 64 && code < 91) && // upper alpha (A-Z)
-            !(code > 96 && code < 123)) { // lower alpha (a-z)
-        return false;
-        }
-    }
-    return true;
+    isModalShowing = false
 }

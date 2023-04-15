@@ -13,26 +13,26 @@
     />
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
   </head>
   <body>
     <!-- navbar -->
     <div class="navbar">
-      <img onclick="onClickLogo()" src="logo.png" alt="logo" />
+      <img id="navbar_logo_button" src="logo.png" alt="logo" />
       <ul>
-        <li><a onclick="onClickAbout()">About</a></li>
-        <li><a onclick="onClickSignUp()">SignUp</a></li>
-        <li><a onclick="onClickLogin()">Login</a></li>
+        <li><a id="navbar_about_button">About</a></li>
+        <li><a id="navbar_signup_button">SignUp</a></li>
+        <li><a id="navbar_login_button">Login</a></li>
       </ul>
     </div>
     <div class="content">
       <!-- welcome page -->
       <div class="welcome">
         <h1>Welcome</h1>
-        <button type="button" class="btn btn-light" onclick="onClickLogin()">
+        <button type="button" id="login_button" class="btn btn-light">
           Login
         </button>
-        <button type="button" class="btn btn-light" onclick="onClickSignUp()">
+        <button type="button" id="signup_button" class="btn btn-light">
           Signup
         </button>
       </div>
@@ -43,7 +43,7 @@
             <div class="modal-header">
               <h5 class="modal-title">Modal title</h5>
               <button
-                onclick="closeModal()"
+                id="close_modal_button_2"
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
@@ -55,7 +55,7 @@
             </div>
             <div class="modal-footer">
               <button
-                onclick="closeModal()"
+                id="close_modal_button_1"
                 type="button"
                 class="btn btn-primary"
               >
@@ -69,7 +69,7 @@
       <div class="login">
         <h1>Login</h1>
         <div class="login-form">
-          <form onsubmit="onSubmitLoginForm(); return false;">
+          <form class="login-form">
             <label for="username">Username:</label>
             <input
               type="text"
@@ -94,7 +94,7 @@
       <div class="signup">
         <h1>Signup</h1>
         <div class="signup-form">
-          <form onsubmit="onSubmitSignUpForm(); return false;">
+          <form class="signup-form">
             <label for="username">Username:</label>
             <input
               type="text"
