@@ -1,17 +1,17 @@
-import {shoko} from "./game.js"
+import {game} from "./game.js"
 import {validate_details} from "./form_validation.js"
 
 // on load page
 let isModalShowing;
 
 $(document).ready(function () {
-    $("div.welcome").show();
+    $("div.welcome").hide();
     $("div.login").hide()
     $("div.signup").hide();
-    $("div.game").hide();
+    $("div.game").show();
     $("div.modal").hide();
-    shoko()
     isModalShowing = false
+    game()
 });
 
 $(document).keyup(function(e) {
@@ -85,7 +85,7 @@ function onSubmitLoginForm(){
         if (username === user.username){
             if (password === user.password){
                 alert("loged in successfully")
-                showGamePage()            
+                showGamePage()           
             }
             else{
                 alert("password is incorrect")
@@ -120,6 +120,7 @@ function showGamePage(){
     $("div.signup").hide();
     $("div.game").show();
     $("div.modal").hide();
+    game()
 }
 
 function showWelcomePage(){
