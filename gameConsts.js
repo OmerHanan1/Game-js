@@ -2,6 +2,10 @@
 export const SPACESHIP_IMAGE = new Image()
 SPACESHIP_IMAGE.src = "./assets/spaceship.png"
 
+// invader image
+export const INVADER_IMAGE = new Image()
+INVADER_IMAGE.src = "./assets/invader.png"
+
 // audio const
 export const AUDIO_CONST = {
     backgroundMusic: new Audio("./assets/audio/backgroundMusic.wav")
@@ -36,14 +40,14 @@ SPACESHIP_CONST.bounds = {
 }
 
 
-// canvas size
+// projectile size
 export const PROJECTILE_CONST = {
     velocity: {
         x: 1,
         y: 4
     },
     radius: 3, 
-    color: "red",
+    color: "yellow",
     // in ms
     timeBetweenShots: 500,
     bounds: {
@@ -54,3 +58,21 @@ export const PROJECTILE_CONST = {
     }
 }
 
+// invader size
+export const INVADER_CONST = {
+    numInvadersInRow: 5,
+    startingPosition: {
+        x: 500,
+        y: 170
+    },
+    width: 50,
+    height: 50,
+    velocity: 10,
+    // in ms
+    timeBetweenMoves: 500,
+}
+
+INVADER_CONST.bounds = {
+    left: 0 + 0.5*INVADER_CONST.width,
+    right: CANVAS_SIZE.width - INVADER_CONST.width*1.5
+}

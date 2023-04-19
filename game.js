@@ -124,6 +124,34 @@ class Projectile {
     }
 }
 
+class Invader { 
+    constructor(position){
+        this.img = CONST.INVADER_IMAGE
+        this.position = position
+        this.width = CONST.INVADER_CONST.width
+        this.height = CONST.INVADER_CONST.height
+        this.velocity = CONST.INVADER_CONST.velocity
+    }
+
+    draw(){
+        ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(isMovingLeft, isMovingRight){
+        if(isMovingLeft)
+            this.position.x -= this.width
+        if(isMovingRight)
+            this.position.x += this.width
+    }
+
+    isOutOfBounds(){
+        return (this.position.x > CONST.PROJECTILE_CONST.bounds.right || 
+            this.position.x < CONST.PROJECTILE_CONST.bounds.left|| 
+            this.position.y > CONST.PROJECTILE_CONST.bounds.down||
+            this.position.y < CONST.PROJECTILE_CONST.bounds.up)
+    }
+}
+
 const keyPressedState = {
     left: false,
     right: false,
@@ -133,11 +161,108 @@ const keyPressedState = {
 }
 
 const projectileList = []
+const invaders = {
+    row1: {invaderList:[], isMovingLeft:true, isMovingRight:false},
+    row2: {invaderList:[], isMovingLeft:false, isMovingRight:true},
+    row3: {invaderList:[], isMovingLeft:false, isMovingRight:true},
+    row4: {invaderList:[], isMovingLeft:true, isMovingRight:false}
+}
+
+function initializeInvaders(){
+    let j = 0
+    for(const [key, invadersRow] of Object.entries(invaders)) {
+        for(let i = 0; i < CONST.INVADER_CONST.numInvadersInRow; i++){
+            const startingPosition = {
+                x: CONST.INVADER_CONST.startingPosition.x + i*CONST.INVADER_CONST.width,
+                y: CONST.INVADER_CONST.startingPosition.y - j*CONST.INVADER_CONST.height
+            } 
+            invadersRow.invaderList.push(new Invader(startingPosition))
+        }
+        j++
+    }
+}
+
+function updateInvaders(){
+    let random_boolean;
+    for(const [key, invadersRow] of Object.entries(invaders)) {
+        random_boolean = Math.random() < 0.5
+        // if (invadersRow.invaderList.length == 0)
+        //     continue
+        if ((invadersRow.invaderList[0].position.x < CONST.INVADER_CONST.bounds.left) && invadersRow.isMovingLeft){
+            invadersRow.isMovingLeft = false
+            invadersRow.isMovingRight = true
+        }
+        else if ((invadersRow.invaderList[invadersRow.invaderList.length-1].position.x > CONST.INVADER_CONST.bounds.right) 
+        && invadersRow.isMovingRight){
+            invadersRow.isMovingLeft = true
+            invadersRow.isMovingRight = false
+        }
+        else if (random_boolean){
+            if(invadersRow.isMovingLeft){
+                invadersRow.isMovingLeft = false
+                invadersRow.isMovingRight = true
+            }
+            else if(invadersRow.isMovingRight){
+                invadersRow.isMovingLeft = true
+                invadersRow.isMovingRight = false
+            }
+        }
+        invadersRow.invaderList.forEach((invader) => {
+            invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)
+        })
+    }
+}
+
+function drawInvaders(){
+    for(const [key, invadersRow] of Object.entries(invaders)) {
+        invadersRow.invaderList.forEach((invader) => {
+            invader.draw()
+        })
+    }
+}
+
+function garbageCollect(){
+    projectileList.forEach((projectile, index) => {
+        if(projectile.isOutOfBounds())
+            projectileList.splice(index, 1)
+        else
+            projectile.update()
+    })
+    for(const [key, invadersRow] of Object.entries(invaders)) {
+        if(invadersRow.invaderList.length == 0)
+            delete invaders[key]
+    }
+}
+
+function handleCollision(){
+    projectileList.forEach((projectile, projectileIndex) => {
+        for(const [key, invadersRow] of Object.entries(invaders)) {
+            invadersRow.invaderList.forEach((invader, invaderIndex) => {
+                const invaderLocation = {
+                    left: invader.position.x,
+                    right: invader.position.x + CONST.INVADER_CONST.width,
+                    up: invader.position.y,
+                    down: invader.position.y + CONST.INVADER_CONST.height
+                }
+                if((projectile.position.x < invaderLocation.right) && (projectile.position.x > invaderLocation.left) &&
+                (projectile.position.y > invaderLocation.up) &&(projectile.position.y < invaderLocation.down)){
+                    projectileList.splice(projectileIndex, 1)
+                    invadersRow.invaderList.splice(invaderIndex, 1)
+                }
+            })
+        }
+    })
+}
 
 export function game(){
     CONST.AUDIO_CONST.backgroundMusic.play()
-    let lastShotTime = Date.now();
-    const player = new Player()    
+
+    let lastShotTime = Date.now()
+    let lastUpdateInvader = Date.now()
+    
+    const player = new Player()
+    initializeInvaders()
+
     function animate(){
         requestAnimationFrame(animate)
 
@@ -146,17 +271,22 @@ export function game(){
 
         player.update()
         player.draw()
+
+        handleCollision()
+
+        if((Date.now() - lastUpdateInvader) > CONST.INVADER_CONST.timeBetweenMoves){
+            updateInvaders()
+            lastUpdateInvader = Date.now()
+        }
+        drawInvaders()
+
         if (keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
-        
-        projectileList.forEach((projectile, index) => {
-            if(projectile.isOutOfBounds())
-                projectileList.splice(index, 1)
-            else
-                projectile.update()
-        })
+
+        garbageCollect()
+        console.log(invaders)
     }
     animate()
 }
