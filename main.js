@@ -5,13 +5,12 @@ import {validate_details} from "./form_validation.js"
 let isModalShowing;
 
 $(document).ready(function () {
-    $("div.welcome").hide();
+    $("div.welcome").show();
     $("div.login").hide()
     $("div.signup").hide();
-    $("div.game").show();
+    $("div.game").hide();
     $("div.modal").hide();
     isModalShowing = false
-    game()
 });
 
 $(document).keyup(function(e) {

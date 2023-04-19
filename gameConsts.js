@@ -8,7 +8,8 @@ INVADER_IMAGE.src = "./assets/invader.png"
 
 // audio const
 export const AUDIO_CONST = {
-    backgroundMusic: new Audio("./assets/audio/backgroundMusic.wav")
+    backgroundMusic: new Audio("./assets/audio/backgroundMusic.wav"),
+    explosion: new Audio("./assets/audio/explode.wav")
 }
 
 // canvas size

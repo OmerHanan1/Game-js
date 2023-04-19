@@ -186,8 +186,8 @@ function updateInvaders(){
     let random_boolean;
     for(const [key, invadersRow] of Object.entries(invaders)) {
         random_boolean = Math.random() < 0.5
-        // if (invadersRow.invaderList.length == 0)
-        //     continue
+        if (invadersRow.invaderList.length == 0)
+            continue
         if ((invadersRow.invaderList[0].position.x < CONST.INVADER_CONST.bounds.left) && invadersRow.isMovingLeft){
             invadersRow.isMovingLeft = false
             invadersRow.isMovingRight = true
@@ -248,6 +248,8 @@ function handleCollision(){
                 (projectile.position.y > invaderLocation.up) &&(projectile.position.y < invaderLocation.down)){
                     projectileList.splice(projectileIndex, 1)
                     invadersRow.invaderList.splice(invaderIndex, 1)
+                    CONST.AUDIO_CONST.explosion.play()
+                    console.log(invaders)
                 }
             })
         }
@@ -286,45 +288,44 @@ export function game(){
         }
 
         garbageCollect()
-        console.log(invaders)
     }
     animate()
+
+    addEventListener("keydown", (event) => {
+        event.preventDefault()
+        if (event.key == "ArrowLeft")
+            keyPressedState.left = true
+    
+        if (event.key == "ArrowRight")
+            keyPressedState.right = true
+    
+        if (event.key == "ArrowUp")
+            keyPressedState.up = true
+    
+        if (event.key == "ArrowDown")
+            keyPressedState.down = true
+    
+        if (event.key == " "){
+            keyPressedState.space = true
+        }
+    });
+    
+    addEventListener("keyup", (event) => {
+        event.preventDefault()
+        if (event.key == "ArrowLeft")
+            keyPressedState.left = false
+    
+        if (event.key == "ArrowRight")
+            keyPressedState.right = false
+    
+        if (event.key == "ArrowUp")
+            keyPressedState.up = false
+    
+        if (event.key == "ArrowDown")
+            keyPressedState.down = false
+    
+        if (event.key == " "){
+            keyPressedState.space = false
+        }
+    });
 }
-
-addEventListener("keydown", (event) => {
-    event.preventDefault()
-    if (event.key == "ArrowLeft")
-        keyPressedState.left = true
-
-    if (event.key == "ArrowRight")
-        keyPressedState.right = true
-
-    if (event.key == "ArrowUp")
-        keyPressedState.up = true
-
-    if (event.key == "ArrowDown")
-        keyPressedState.down = true
-
-    if (event.key == " "){
-        keyPressedState.space = true
-    }
-});
-
-addEventListener("keyup", (event) => {
-    event.preventDefault()
-    if (event.key == "ArrowLeft")
-        keyPressedState.left = false
-
-    if (event.key == "ArrowRight")
-        keyPressedState.right = false
-
-    if (event.key == "ArrowUp")
-        keyPressedState.up = false
-
-    if (event.key == "ArrowDown")
-        keyPressedState.down = false
-
-    if (event.key == " "){
-        keyPressedState.space = false
-    }
-});
