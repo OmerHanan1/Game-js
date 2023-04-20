@@ -9,7 +9,8 @@ INVADER_IMAGE.src = "./assets/invader.png"
 // audio const
 export const AUDIO_CONST = {
     backgroundMusic: new Audio("./assets/audio/backgroundMusic.wav"),
-    explosion: new Audio("./assets/audio/explode.wav")
+    explosion: new Audio("./assets/audio/explode.wav"),
+    shoot: new Audio("./assets/audio/shoot.wav")
 }
 
 // canvas size
@@ -41,7 +42,7 @@ SPACESHIP_CONST.bounds = {
 }
 
 
-// projectile size
+// projectile const
 export const PROJECTILE_CONST = {
     velocity: {
         x: 1,
