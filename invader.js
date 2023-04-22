@@ -26,7 +26,7 @@ export class Invader {
         const curr_x = this.position.x + this.width/2
         const curr_y = this.position.y + this.height
         const projectile = new InvaderProjectile({x: curr_x, y: curr_y})
-        STATE.projectileList.push(projectile)
+        STATE.invaderProjectileList.push(projectile)
         CONST.AUDIO_CONST.shoot.play()
     }
         

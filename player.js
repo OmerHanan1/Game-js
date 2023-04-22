@@ -13,6 +13,11 @@ export class Player {
         this.width = CONST.SPACESHIP_CONST.width
         this.height = CONST.SPACESHIP_CONST.height
     }
+
+    position(){
+        return {x: this.position['x'], y: this.position['y']}
+    }
+
     moveLeft(){
         if(!(this.position.x < CONST.SPACESHIP_CONST.bounds.left))
             this.position.x -= this.speed.x
@@ -78,7 +83,7 @@ export class Player {
         else if(STATE.keyPressedState.right)
             isMovingRight = true
         const projectile = new Projectile({x: curr_x, y: curr_y}, isMovingLeft, isMovingRight)
-        STATE.invaderProjectileList.push(projectile)
-        CONST.AUDIO_CONST.shoot.play() // TODO: Find a better sound effect for invader shooting
+        STATE.projectileList.push(projectile)
+        CONST.AUDIO_CONST.shoot.play()
     }
 }

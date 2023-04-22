@@ -9,6 +9,7 @@ export const keyPressedState = {
 }
 
 export const projectileList = []
+export const invaderProjectileList = []
 
 export const invaderList = {
     row1: {invaderList:[], isMovingLeft:true, isMovingRight:false},

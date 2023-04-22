@@ -69,7 +69,7 @@ export const INVADER_PROJECTILE_CONST = {
     radius: 3, 
     color: "red",
     // in ms
-    timeBetweenShots: 500,
+    timeBetweenShots: 1000,
     bounds: {
         left:0,
         right:CANVAS_SIZE.width,

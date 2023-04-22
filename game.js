@@ -2,6 +2,7 @@ import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 import {Player} from "./player.js"
 import {Projectile} from "./projectile.js" 
+import {InvaderProjectile} from "./InvaderProjectile.js"
 import {Invader} from "./invader.js"
 
 export function game(){
@@ -10,6 +11,7 @@ export function game(){
 
     let lastShotTime = Date.now()
     let lastUpdateInvader = Date.now()
+    let lastUpdateInvaderProjectile = Date.now()
     
     const player = new Player()
     initializeInvaders()
@@ -23,6 +25,8 @@ export function game(){
         player.update()
         player.draw()
 
+        handleCollisionBetweenProjectilesAndInvaders(player)
+        // handleCollisionBetweenProjectilesAndPlayer()
 
         if((Date.now() - lastUpdateInvader) > CONST.INVADER_CONST.timeBetweenMoves){
             updateInvaders()
@@ -30,13 +34,11 @@ export function game(){
         }
         drawInvaders()
         
+
         if (STATE.keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
-        handleCollisionBetweenProjectilesAndInvaders()
-
-        
 
         garbageCollect()
     }
@@ -125,11 +127,13 @@ function updateInvaders(){
             }
         }
         invadersRow.invaderList.forEach((invader) => {
-            invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)
+            invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)            
         })
-        invadersRow.invaderList.forEach((invader) => {
-            if (Math.random() < 0.05)
-                invader.shoot()
+
+        invadersRow.invaderList.forEach((invader, index) => {
+                if (Math.random() < 0.01){
+                    invader.shoot()
+                }
         })
     }
 }
@@ -149,14 +153,20 @@ function garbageCollect(){
         else
             projectile.update()
     })
+    STATE.invaderProjectileList.forEach((projectile, index) => {
+        if(projectile.isOutOfBounds())
+            STATE.invaderProjectileList.splice(index, 1)
+        else
+            projectile.update()
+    })
+
     // for(const [key, invadersRow] of Object.entries(invaders)) {
     //     if(invadersRow.invaderList.length == 0)
     //         delete invaders[key]
     // }
 }
 
-// Handle coliision between projectiles and invaders
-function handleCollisionBetweenProjectilesAndInvaders(){
+function handleCollisionBetweenProjectilesAndInvaders(player){
     STATE.projectileList.forEach((projectile, projectileIndex) => {
         for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
             invadersRow.invaderList.forEach((invader, invaderIndex) => {
@@ -176,22 +186,24 @@ function handleCollisionBetweenProjectilesAndInvaders(){
             })
         }
     })
-}
-
-// Handle collision between invader's projectiles and player
-function handleCollisionBetweenInvadersProjectilesAndPlayer(){
-    STATE.invaderProjectileList.forEach((projectile, projectileIndex) => {
-        const playerLocation = {
-            left: STATE.player.position.x,
-            right: STATE.player.position.x + CONST.PLAYER_CONST.width,
-            up: STATE.player.position.y,
-            down: STATE.player.position.y + CONST.PLAYER_CONST.height
-        }
-        if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
-        (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
-            STATE.invaderProjectileList.splice(projectileIndex, 1)
-        }
-    })
+    if (STATE.invaderProjectileList != undefined)
+    {
+        STATE.invaderProjectileList.forEach((projectile, projectileIndex) => {
+            let position = player.position
+            const playerLocation = 
+            {
+                left: position['x'] - CONST.SPACESHIP_CONST.width,
+                right: position['x'] + CONST.SPACESHIP_CONST.width,
+                up: position['y'] - CONST.SPACESHIP_CONST.height,
+                down: position['y'] + CONST.SPACESHIP_CONST.height
+            }
+            if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
+            (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
+                STATE.invaderProjectileList.splice(projectileIndex, 1)
+                console.log("player hit")
+            }
+        })
+    }
 }
 
 function updateScore(){
@@ -208,4 +220,9 @@ function updateTimer(){
         return
     STATE.gameState.time--
     document.getElementById('timer').innerHTML = STATE.gameState.time
+}
+
+function getPlayerPosition(player)
+{
+    return player.position()
 }
