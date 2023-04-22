@@ -23,18 +23,20 @@ export function game(){
         player.update()
         player.draw()
 
-        handleCollision()
 
         if((Date.now() - lastUpdateInvader) > CONST.INVADER_CONST.timeBetweenMoves){
             updateInvaders()
             lastUpdateInvader = Date.now()
         }
         drawInvaders()
-
+        
         if (STATE.keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
+        handleCollisionBetweenProjectilesAndInvaders()
+
+        
 
         garbageCollect()
     }
@@ -126,7 +128,7 @@ function updateInvaders(){
             invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)
         })
         invadersRow.invaderList.forEach((invader) => {
-            if (Math.random() < 0.01)
+            if (Math.random() < 0.05)
                 invader.shoot()
         })
     }
@@ -153,7 +155,8 @@ function garbageCollect(){
     // }
 }
 
-function handleCollision(){
+// Handle coliision between projectiles and invaders
+function handleCollisionBetweenProjectilesAndInvaders(){
     STATE.projectileList.forEach((projectile, projectileIndex) => {
         for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
             invadersRow.invaderList.forEach((invader, invaderIndex) => {
@@ -171,6 +174,22 @@ function handleCollision(){
                     updateScore()
                 }
             })
+        }
+    })
+}
+
+// Handle collision between invader's projectiles and player
+function handleCollisionBetweenInvadersProjectilesAndPlayer(){
+    STATE.invaderProjectileList.forEach((projectile, projectileIndex) => {
+        const playerLocation = {
+            left: STATE.player.position.x,
+            right: STATE.player.position.x + CONST.PLAYER_CONST.width,
+            up: STATE.player.position.y,
+            down: STATE.player.position.y + CONST.PLAYER_CONST.height
+        }
+        if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
+        (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
+            STATE.invaderProjectileList.splice(projectileIndex, 1)
         }
     })
 }

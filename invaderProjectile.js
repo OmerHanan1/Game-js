@@ -2,13 +2,11 @@ import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 
 export class InvaderProjectile { 
-    constructor(position ,isMovingLeft, isMovingRight){
+    constructor(position){
         this.position = position
-        this.velocity = CONST.PROJECTILE_CONST.velocity
-        this.radius = CONST.PROJECTILE_CONST.radius
-        this.color = CONST.PROJECTILE_CONST.color
-        this.isMovingLeft = isMovingLeft
-        this.isMovingRight = isMovingRight
+        this.velocity = CONST.INVADER_PROJECTILE_CONST.velocity
+        this.radius = CONST.INVADER_PROJECTILE_CONST.radius
+        this.color = CONST.INVADER_PROJECTILE_CONST.color
     }
 
     draw(){
@@ -21,17 +19,13 @@ export class InvaderProjectile {
 
     update(){
         this.draw()
-        if(this.isMovingLeft)
-            this.position.x -= this.velocity.x
-        else if(this.isMovingRight)
-            this.position.x += this.velocity.x
-        this.position.y -= this.velocity.y
+        this.position.y += this.velocity.y
     }
 
     isOutOfBounds(){
-        return (this.position.x > CONST.PROJECTILE_CONST.bounds.right || 
-            this.position.x < CONST.PROJECTILE_CONST.bounds.left|| 
-            this.position.y > CONST.PROJECTILE_CONST.bounds.down||
-            this.position.y < CONST.PROJECTILE_CONST.bounds.up)
+        return (this.position.x > CONST.INVADER_PROJECTILE_CONST.bounds.right || 
+            this.position.x < CONST.INVADER_PROJECTILE_CONST.bounds.left|| 
+            this.position.y > CONST.INVADER_PROJECTILE_CONST.bounds.down||
+            this.position.y < CONST.INVADER_PROJECTILE_CONST.bounds.up)
     }
 }

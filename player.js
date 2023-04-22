@@ -78,7 +78,7 @@ export class Player {
         else if(STATE.keyPressedState.right)
             isMovingRight = true
         const projectile = new Projectile({x: curr_x, y: curr_y}, isMovingLeft, isMovingRight)
-        STATE.projectileList.push(projectile)
-        CONST.AUDIO_CONST.shoot.play()
+        STATE.invaderProjectileList.push(projectile)
+        CONST.AUDIO_CONST.shoot.play() // TODO: Find a better sound effect for invader shooting
     }
 }
