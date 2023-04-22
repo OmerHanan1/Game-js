@@ -192,6 +192,7 @@ function handleCollision(player){
             (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
                 STATE.invaderProjectileList.splice(projectileIndex, 1)
                 console.log("player hit")
+                CONST.AUDIO_CONST.hit.play()
             }
         })
     }
