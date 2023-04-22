@@ -1,5 +1,6 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
+import { InvaderProjectile } from "./invaderProjectile.js"
 
 export class Invader { 
     constructor(position){
@@ -20,4 +21,19 @@ export class Invader {
         if(isMovingRight)
             this.position.x += this.width
     }
+
+    shoot(){
+        const curr_x = this.position.x + this.width/2
+        const curr_y = this.position.y
+        let isMovingLeft = false
+        let isMovingRight = false
+        if(STATE.keyPressedState.left)
+            isMovingLeft = true
+        else if(STATE.keyPressedState.right)
+            isMovingRight = true
+        const projectile = new InvaderProjectile({x: curr_x, y: curr_y}, isMovingLeft, isMovingRight)
+        STATE.projectileList.push(projectile)
+        CONST.AUDIO_CONST.shoot.play()
+    }
+        
 }

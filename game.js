@@ -1,7 +1,7 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 import {Player} from "./player.js"
-import {Projectile} from "./projectile.js"
+import {Projectile} from "./projectile.js" 
 import {Invader} from "./invader.js"
 
 export function game(){
@@ -124,6 +124,10 @@ function updateInvaders(){
         }
         invadersRow.invaderList.forEach((invader) => {
             invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)
+        })
+        invadersRow.invaderList.forEach((invader) => {
+            if (Math.random() < 0.01)
+                invader.shoot()
         })
     }
 }
