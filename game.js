@@ -183,10 +183,10 @@ function handleCollision(player){
             let position = player.position
             const playerLocation = 
             {
-                left: position['x'] - CONST.SPACESHIP_CONST.width,
-                right: position['x'] + CONST.SPACESHIP_CONST.width,
-                up: position['y'] - CONST.SPACESHIP_CONST.height,
-                down: position['y'] + CONST.SPACESHIP_CONST.height
+                left: position.x - CONST.SPACESHIP_CONST.width,
+                right: position.x + CONST.SPACESHIP_CONST.width,
+                up: position.y - CONST.SPACESHIP_CONST.height,
+                down: position.y + CONST.SPACESHIP_CONST.height
             }
             if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
             (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
