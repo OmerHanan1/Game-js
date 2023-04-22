@@ -1,6 +1,6 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
-import { InvaderProjectile } from "./invaderProjectile.js"
+import { InvaderProjectile } from "invaderProjectile.js"
 
 export class Invader { 
     constructor(position){
