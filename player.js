@@ -13,6 +13,11 @@ export class Player {
         this.width = CONST.SPACESHIP_CONST.width
         this.height = CONST.SPACESHIP_CONST.height
     }
+
+    position(){
+        return {x: this.position['x'], y: this.position['y']}
+    }
+
     moveLeft(){
         if(!(this.position.x < CONST.SPACESHIP_CONST.bounds.left))
             this.position.x -= this.speed.x

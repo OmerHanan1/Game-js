@@ -60,6 +60,24 @@ export const PROJECTILE_CONST = {
     }
 }
 
+// projectile const
+export const INVADER_PROJECTILE_CONST = {
+    velocity: {
+        x: 1,
+        y: 4
+    },
+    radius: 3, 
+    color: "red",
+    // in ms
+    timeBetweenShots: 1000,
+    bounds: {
+        left:0,
+        right:CANVAS_SIZE.width,
+        up:0,
+        down:CANVAS_SIZE.height
+    }
+}
+
 // invader size
 export const INVADER_CONST = {
     numInvadersInRow: 5,
