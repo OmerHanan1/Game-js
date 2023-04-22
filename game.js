@@ -1,8 +1,6 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 import {Player} from "./player.js"
-import {Projectile} from "./projectile.js" 
-import {InvaderProjectile} from "./InvaderProjectile.js"
 import {Invader} from "./invader.js"
 
 export function game(){
@@ -11,35 +9,28 @@ export function game(){
 
     let lastShotTime = Date.now()
     let lastUpdateInvader = Date.now()
-    let lastUpdateInvaderProjectile = Date.now()
     
     const player = new Player()
     initializeInvaders()
 
     function animate(){
         requestAnimationFrame(animate)
-
         STATE.ctx.fillStyle = "black"
         STATE.ctx.fillRect(0, 0, STATE.canvas.width, STATE.canvas.height)
-
         player.update()
         player.draw()
 
-        handleCollisionBetweenProjectilesAndInvaders(player)
-        // handleCollisionBetweenProjectilesAndPlayer()
-
+        handleCollision(player)
         if((Date.now() - lastUpdateInvader) > CONST.INVADER_CONST.timeBetweenMoves){
             updateInvaders()
             lastUpdateInvader = Date.now()
         }
         drawInvaders()
-        
 
         if (STATE.keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
-
         garbageCollect()
     }
     animate()
@@ -166,7 +157,7 @@ function garbageCollect(){
     // }
 }
 
-function handleCollisionBetweenProjectilesAndInvaders(player){
+function handleCollision(player){
     STATE.projectileList.forEach((projectile, projectileIndex) => {
         for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
             invadersRow.invaderList.forEach((invader, invaderIndex) => {
@@ -220,9 +211,4 @@ function updateTimer(){
         return
     STATE.gameState.time--
     document.getElementById('timer').innerHTML = STATE.gameState.time
-}
-
-function getPlayerPosition(player)
-{
-    return player.position()
 }
