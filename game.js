@@ -3,18 +3,42 @@ import * as STATE from "./gameState.js"
 import {Player} from "./player.js"
 import {Invader} from "./invader.js"
 
-export function game(){
-    CONST.AUDIO_CONST.backgroundMusic.play()
-    setInterval(updateTimer, 1000);
+let player;
+let lastShotTime;
+let lastUpdateInvader;
 
-    let lastShotTime = Date.now()
-    let lastUpdateInvader = Date.now()
+export function game(){
     
-    const player = new Player()
-    initializeInvaders()
+    let intervalID = setInterval(updateTimer, 1000);
+    CONST.AUDIO_CONST.backgroundMusic.play()
+
+    if (!STATE.gameState.gameStarted){
+
+        lastShotTime = Date.now()
+        lastUpdateInvader = Date.now()
+        
+        player = new Player()
+        initializeInvaders()
+        STATE.gameState.gameStarted = true
+    }
+    let myReq;
 
     function animate(){
-        requestAnimationFrame(animate)
+        if (STATE.gameState.time == 0 || STATE.gameState.numLives == 0){
+            if(score != 200)
+                alert("omer hamanyak")
+            STATE.gameState.isPlaying = false
+        }
+        if (STATE.gameState.isPlaying){
+            myReq = requestAnimationFrame(animate)
+        }
+        else{
+            clearInterval(intervalID)
+            CONST.AUDIO_CONST.backgroundMusic.pause()
+            cancelAnimationFrame(myReq)
+            removeEventListener("keydown", func1)
+            removeEventListener("keyup", func2)
+        }
         STATE.ctx.fillStyle = "black"
         STATE.ctx.fillRect(0, 0, STATE.canvas.width, STATE.canvas.height)
         player.update()
@@ -26,20 +50,17 @@ export function game(){
             lastUpdateInvader = Date.now()
         }
         drawInvaders()
-
         if (STATE.keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
         garbageCollect()
     }
-    animate()
+    if(STATE.gameState.isPlaying){
+        animate()
+    }
 
-    // let stopgame = false
-    // if(stopgame)
-    //     return
-
-    addEventListener("keydown", (event) => {
+    function func1(event){
         event.preventDefault()
         if (event.key == "ArrowLeft")
             STATE.keyPressedState.left = true
@@ -56,9 +77,9 @@ export function game(){
         if (event.key == " "){
             STATE.keyPressedState.space = true
         }
-    });
-    
-    addEventListener("keyup", (event) => {
+    }
+
+    function func2(event){
         event.preventDefault()
         if (event.key == "ArrowLeft")
             STATE.keyPressedState.left = false
@@ -75,7 +96,10 @@ export function game(){
         if (event.key == " "){
             STATE.keyPressedState.space = false
         }
-    });
+    }
+
+    addEventListener("keydown", func1);
+    addEventListener("keyup", func2);
 }
 
 function initializeInvaders(){
@@ -117,16 +141,29 @@ function updateInvaders(){
                 invadersRow.isMovingRight = false
             }
         }
+
+        let isShootingAllowed = isInvadersShootingAllowed()
         invadersRow.invaderList.forEach((invader) => {
-            invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)            
+            invader.update(invadersRow.isMovingLeft, invadersRow.isMovingRight)
+            if ((Math.random() < 0.3) && isShootingAllowed)
+                invader.shoot()
+                isShootingAllowed = false
         })
 
-        invadersRow.invaderList.forEach((invader, index) => {
-                if (Math.random() < 0.01){
-                    invader.shoot()
-                }
-        })
     }
+}
+
+function isInvadersShootingAllowed(){
+    let allowedToshoot = true;
+    if (STATE.invaderProjectileList != undefined){
+        for(let i=0; i <STATE.invaderProjectileList.length; i++){
+            if (STATE.invaderProjectileList[i].position.y < CONST.CANVAS_SIZE.height*(3/4)){
+                allowedToshoot = false
+                break
+            }
+        }
+    }
+    return allowedToshoot
 }
 
 function drawInvaders(){
@@ -150,11 +187,6 @@ function garbageCollect(){
         else
             projectile.update()
     })
-
-    // for(const [key, invadersRow] of Object.entries(invaders)) {
-    //     if(invadersRow.invaderList.length == 0)
-    //         delete invaders[key]
-    // }
 }
 
 function handleCollision(player){
@@ -191,8 +223,8 @@ function handleCollision(player){
             if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
             (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
                 STATE.invaderProjectileList.splice(projectileIndex, 1)
-                console.log("player hit")
                 CONST.AUDIO_CONST.hit.play()
+                updateLives()
             }
         })
     }
@@ -204,12 +236,19 @@ function updateScore(){
     const destroyedInRow3 = CONST.INVADER_CONST.numInvadersInRow - STATE.invaderList.row3.invaderList.length
     const destroyedInRow4 = CONST.INVADER_CONST.numInvadersInRow - STATE.invaderList.row4.invaderList.length
     STATE.gameState.score = destroyedInRow1*5 + destroyedInRow2*10 + destroyedInRow3*15 + destroyedInRow4*20
-    document.getElementById('score').innerHTML = STATE.gameState.score
+    document.getElementById('score').innerHTML = "score: " + STATE.gameState.score
 }
 
 function updateTimer(){
     if(STATE.gameState.time == 0)
         return
     STATE.gameState.time--
-    document.getElementById('timer').innerHTML = STATE.gameState.time
+    document.getElementById('timer').innerHTML = "time: " + STATE.gameState.time
+}
+
+function updateLives(){
+    if(STATE.gameState.numLives == 0)
+        return
+    STATE.gameState.numLives--
+    document.getElementById('lives').innerHTML = "lives: " + STATE.gameState.numLives
 }

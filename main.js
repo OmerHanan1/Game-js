@@ -1,17 +1,17 @@
 import {game} from "./game.js"
 import {validate_details} from "./form_validation.js"
+import * as STATE from "./gameState.js" 
 
 // on load page
 let isModalShowing;
 
 $(document).ready(function () {
     $("div.welcome").hide();
-    $("div.login").hide()
+    $("div.login").show()
     $("div.signup").hide();
-    $("div.game").show();
+    $("div.game").hide();
     $("div.modal").hide();
     isModalShowing = false
-    game()
 });
 
 $(document).keyup(function(e) {
@@ -104,6 +104,7 @@ function showLoginPage(){
     $("div.signup").hide();
     $("div.game").hide();
     $("div.modal").hide();
+    pauseGame()
 }
 
 function showSignUpPage(){
@@ -112,6 +113,7 @@ function showSignUpPage(){
     $("div.signup").show();
     $("div.game").hide();
     $("div.modal").hide();
+    pauseGame()
 }
 
 function showGamePage(){
@@ -120,7 +122,12 @@ function showGamePage(){
     $("div.signup").hide();
     $("div.game").show();
     $("div.modal").hide();
-    game()
+    if(!STATE.gameState.isStarted){
+        startNewGame()
+    }
+    else{
+        showModal()
+    }
 }
 
 function showWelcomePage(){
@@ -129,14 +136,32 @@ function showWelcomePage(){
     $("div.signup").hide();
     $("div.game").hide();
     $("div.modal").hide();
+    pauseGame()
 }
 
 function showModal(){
     $("div.modal").show();
     isModalShowing = true
+    pauseGame()
 }
 
 function closeModal(){
     $("div.modal").hide();
     isModalShowing = false
+    continueGame()
+}
+
+function startNewGame(){
+    STATE.gameState.isPlaying = true
+    STATE.gameState.isStarted = true
+    game()
+}
+
+function pauseGame(){
+    STATE.gameState.isPlaying = false
+}
+
+function continueGame(){
+    STATE.gameState.isPlaying = true
+    game()
 }

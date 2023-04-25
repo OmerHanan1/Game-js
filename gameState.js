@@ -20,7 +20,10 @@ export const invaderList = {
 
 export const gameState = {
     time: 120,
-    score: 0
+    score: 0,
+    numLives: 3,
+    isPlaying: false,
+    isStarted: false
 }  
 
 export const canvas = document.querySelector('canvas');
