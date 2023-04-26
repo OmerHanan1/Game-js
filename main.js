@@ -17,11 +17,18 @@ $(document).ready(function () {
 });
 
 $(document).keyup(function(e) {
-    if (e.key === "Escape") { // escape key maps to keycode `27`
+    if (e.key === "Escape") { 
         if(isModalShowing){
             closeModal()
         }
     }
+});
+
+const inputVal = document.getElementById("shooting_input");
+inputVal.value = CONST.SPACESHIP_CONST.shootingKey
+inputVal.addEventListener("keydown", (event) => {
+    event.preventDefault()
+    inputVal.value = event.key
 });
 
 // decalring users
@@ -45,15 +52,6 @@ $("#navbar_logo_button").click(() => showWelcomePage());
 $("#close_modal_button_1").click(() => closeModal());
 $("#close_modal_button_2").click(() => closeModal());
 
-// config
-const inputVal = document.getElementById("shooting_input");
-inputVal.value = CONST.SPACESHIP_CONST.shootingKey
-inputVal.addEventListener("keydown", (event) => {
-    event.preventDefault()
-    inputVal.value = event.key
-});
-$("#submit_shooting_button").click(() => onSubmitShootingButton());
-
 
 // form submition
 $("form.signup-form").submit((event) => {
@@ -67,6 +65,8 @@ $("form.login-form").submit((event) => {
     onSubmitLoginForm();
     return false;
 });
+
+$("#submit_shooting_button").click(() => onSubmitShootingButton());
 
 
 // on form submit events

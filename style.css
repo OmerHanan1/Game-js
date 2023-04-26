@@ -243,6 +243,40 @@ select {
   padding: 20px;
 }
 
+/*config form */
+.config {
+  width: 300px;
+}
+
+.config input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+}
+
+.config input[type="color"],
+select {
+  width: 100%;
+  height: 50px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+}
+
+#submit_shooting_button {
+  margin-top: 10px;
+  width: 100%;
+}
+
 /* footer div*/
 .footer {
   margin: auto;
