@@ -1,7 +1,7 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 
-export class Projectile { 
+export class PlayerProjectile { 
     constructor(position ,isMovingLeft, isMovingRight){
         this.position = position
         this.velocity = CONST.PROJECTILE_CONST.velocity

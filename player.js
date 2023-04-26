@@ -1,6 +1,6 @@
 import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
-import { Projectile } from "./projectile.js"
+import { PlayerProjectile } from "./playerProjectile.js"
 
 export class Player {
     constructor(){
@@ -82,7 +82,7 @@ export class Player {
             isMovingLeft = true
         else if(STATE.keyPressedState.right)
             isMovingRight = true
-        const projectile = new Projectile({x: curr_x, y: curr_y}, isMovingLeft, isMovingRight)
+        const projectile = new PlayerProjectile({x: curr_x, y: curr_y}, isMovingLeft, isMovingRight)
         STATE.projectileList.push(projectile)
         CONST.AUDIO_CONST.shoot.play()
     }

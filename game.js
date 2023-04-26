@@ -187,22 +187,8 @@ function drawInvaders(){
 }
 
 
-function garbageCollect(){
-    STATE.projectileList.forEach((projectile, index) => {
-        if(projectile.isOutOfBounds())
-            STATE.projectileList.splice(index, 1)
-        else
-            projectile.update()
-    })
-    STATE.invaderProjectileList.forEach((projectile, index) => {
-        if(projectile.isOutOfBounds())
-            STATE.invaderProjectileList.splice(index, 1)
-        else
-            projectile.update()
-    })
-}
-
 function handleCollision(player){
+    // handle invader and playerProjectile 
     STATE.projectileList.forEach((projectile, projectileIndex) => {
         for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
             invadersRow.invaderList.forEach((invader, invaderIndex) => {
@@ -222,15 +208,17 @@ function handleCollision(player){
             })
         }
     })
+
+    // handle player and invaderProjectile 
     if (STATE.invaderProjectileList != undefined)
     {
         STATE.invaderProjectileList.forEach((projectile, projectileIndex) => {
             let position = player.position
             const playerLocation = 
             {
-                left: position.x - CONST.SPACESHIP_CONST.width,
+                left: position.x,
                 right: position.x + CONST.SPACESHIP_CONST.width,
-                up: position.y - CONST.SPACESHIP_CONST.height,
+                up: position.y,
                 down: position.y + CONST.SPACESHIP_CONST.height
             }
             if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
@@ -251,6 +239,21 @@ function updateInvaderSpeed(){
             invader.velocity *= CONST.INVADER_CONST.speedMultiplier
         })
     }
+}
+
+function garbageCollect(){
+    STATE.projectileList.forEach((projectile, index) => {
+        if(projectile.isOutOfBounds())
+            STATE.projectileList.splice(index, 1)
+        else
+            projectile.update()
+    })
+    STATE.invaderProjectileList.forEach((projectile, index) => {
+        if(projectile.isOutOfBounds())
+            STATE.invaderProjectileList.splice(index, 1)
+        else
+            projectile.update()
+    })
 }
 
 function updateScore(){
