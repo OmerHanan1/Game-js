@@ -10,6 +10,7 @@ let lastSpeedUpdateInvader;
 let numSpeedUpdates;
 
 export function game(){
+
     
     let intervalID = setInterval(UTILS.updateTimer, 1000);
     CONST.AUDIO_CONST.backgroundMusic.play()
@@ -55,7 +56,7 @@ export function game(){
             lastUpdateInvader = Date.now()
         }
         UTILS.drawInvaders()
-        if (STATE.keyPressedState.space && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
+        if (STATE.keyPressedState.shooting && (Date.now() - lastShotTime) > CONST.PROJECTILE_CONST.timeBetweenShots){
             player.shoot()
             lastShotTime = Date.now()
         }
@@ -86,8 +87,8 @@ export function game(){
         if (event.key == "ArrowDown")
             STATE.keyPressedState.down = true
     
-        if (event.key == " "){
-            STATE.keyPressedState.space = true
+        if (event.key == CONST.SPACESHIP_CONST.shootingKey){
+            STATE.keyPressedState.shooting = true
         }
     }
 
@@ -105,8 +106,8 @@ export function game(){
         if (event.key == "ArrowDown")
             STATE.keyPressedState.down = false
     
-        if (event.key == " "){
-            STATE.keyPressedState.space = false
+        if (event.key == CONST.SPACESHIP_CONST.shootingKey){
+            STATE.keyPressedState.shooting = false
         }
     }
 

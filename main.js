@@ -1,15 +1,17 @@
 import {game} from "./game.js"
 import {validate_details} from "./form_validation.js"
 import * as STATE from "./gameState.js" 
+import * as CONST from "./gameConsts.js"
 
 // on load page
 let isModalShowing;
 
 $(document).ready(function () {
-    $("div.welcome").hide();
-    $("div.login").show()
+    $("div.welcome").show();
+    $("div.login").hide()
     $("div.signup").hide();
     $("div.game").hide();
+    $("div.config").hide();
     $("div.modal").hide();
     isModalShowing = false
 });
@@ -43,6 +45,14 @@ $("#navbar_logo_button").click(() => showWelcomePage());
 $("#close_modal_button_1").click(() => closeModal());
 $("#close_modal_button_2").click(() => closeModal());
 
+// config
+const inputVal = document.getElementById("shooting_input");
+inputVal.value = CONST.SPACESHIP_CONST.shootingKey
+inputVal.addEventListener("keydown", (event) => {
+    event.preventDefault()
+    inputVal.value = event.key
+});
+$("#submit_shooting_button").click(() => onSubmitShootingButton());
 
 
 // form submition
@@ -85,7 +95,7 @@ function onSubmitLoginForm(){
         if (username === user.username){
             if (password === user.password){
                 alert("loged in successfully")
-                showGamePage()           
+                showConfigPage()           
             }
             else{
                 alert("password is incorrect")
@@ -96,6 +106,18 @@ function onSubmitLoginForm(){
     alert("incorrect username")
 }
 
+function onSubmitShootingButton(){
+    inputVal.value = document.getElementById("shooting_input").value;
+    if(inputVal.value == "ArrowLeft" || inputVal.value == "ArrowRight" 
+    || inputVal.value == "ArrowUp" || inputVal.value == "ArrowDown" | inputVal.value == "Escape"){
+        alert("Choose different key than arrow keys or ESC")
+        return
+    }
+    CONST.SPACESHIP_CONST.shootingKey = inputVal.value
+    CONST.PROJECTILE_CONST.color = document.getElementById("projrctile_color_input").value;
+    showGamePage()
+}
+
 
 // page navigation
 function showLoginPage(){
@@ -104,6 +126,7 @@ function showLoginPage(){
     $("div.signup").hide();
     $("div.game").hide();
     $("div.modal").hide();
+    $("div.config").hide();
     pauseGame()
 }
 
@@ -113,6 +136,7 @@ function showSignUpPage(){
     $("div.signup").show();
     $("div.game").hide();
     $("div.modal").hide();
+    $("div.config").hide();
     pauseGame()
 }
 
@@ -122,6 +146,7 @@ function showGamePage(){
     $("div.signup").hide();
     $("div.game").show();
     $("div.modal").hide();
+    $("div.config").hide();
     if(!STATE.gameState.isStarted){
         startNewGame()
     }
@@ -136,6 +161,17 @@ function showWelcomePage(){
     $("div.signup").hide();
     $("div.game").hide();
     $("div.modal").hide();
+    $("div.config").hide();
+    pauseGame()
+}
+
+function showConfigPage(){
+    $("div.welcome").hide();
+    $("div.login").hide();
+    $("div.signup").hide();
+    $("div.game").hide();
+    $("div.modal").hide();
+    $("div.config").show();
     pauseGame()
 }
 
@@ -148,13 +184,14 @@ function showModal(){
 function closeModal(){
     $("div.modal").hide();
     isModalShowing = false
-    continueGame()
+    if(STATE.gameState.isStarted)
+        continueGame()
 }
 
 function startNewGame(){
     STATE.gameState.isPlaying = true
     STATE.gameState.isStarted = true
-    game()
+    setTimeout(game, 2000);
 }
 
 function pauseGame(){
@@ -163,5 +200,5 @@ function pauseGame(){
 
 function continueGame(){
     STATE.gameState.isPlaying = true
-    game()
+    setTimeout(game, 2000);
 }

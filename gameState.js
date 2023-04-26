@@ -5,7 +5,7 @@ export const keyPressedState = {
     right: false,
     up: false,
     down:false,
-    space:false
+    shooting:false
 }
 
 export const projectileList = []

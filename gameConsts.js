@@ -16,14 +16,17 @@ export const AUDIO_CONST = {
     gameOver: new Audio("./assets/audio/gameOver.mp3")
 }
 
+
 // canvas size
 export const CANVAS_SIZE = {
     width: 1200,
     height: 600
 }
 
+
 // spaceship const
 export const SPACESHIP_CONST = {
+    shootingKey: " ",
     width: 75,
     height: 50,
     startingPosition: {
@@ -35,6 +38,7 @@ export const SPACESHIP_CONST = {
         y: 2
     }
 }
+
 
 // spaceship bounds
 SPACESHIP_CONST.bounds = {
