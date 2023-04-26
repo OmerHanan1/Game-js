@@ -19,7 +19,7 @@ export class InvaderProjectile {
 
     update(){
         this.draw()
-        this.position.y += this.velocity.y
+        this.position.y += this.velocity
     }
 
     isOutOfBounds(){

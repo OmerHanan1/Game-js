@@ -6,6 +6,8 @@ import {Invader} from "./invader.js"
 let player;
 let lastShotTime;
 let lastUpdateInvader;
+let lastUpdateSpeedInvader;
+let numUpdatesSpeed;
 
 export function game(){
     
@@ -16,7 +18,9 @@ export function game(){
 
         lastShotTime = Date.now()
         lastUpdateInvader = Date.now()
-        
+        lastUpdateSpeedInvader = Date.now()
+        numUpdatesSpeed = 0
+
         player = new Player()
         initializeInvaders()
         STATE.gameState.gameStarted = true
@@ -35,6 +39,12 @@ export function game(){
         else{
             clearInterval(intervalID)
             CONST.AUDIO_CONST.backgroundMusic.pause()
+            CONST.AUDIO_CONST.shoot.pause()
+            CONST.AUDIO_CONST.bonus.pause()
+            CONST.AUDIO_CONST.explosion.pause()
+            CONST.AUDIO_CONST.hit.pause()
+
+            CONST.AUDIO_CONST.gameOver.play()
             cancelAnimationFrame(myReq)
             removeEventListener("keydown", func1)
             removeEventListener("keyup", func2)
@@ -54,6 +64,13 @@ export function game(){
             player.shoot()
             lastShotTime = Date.now()
         }
+        if (((Date.now() - lastUpdateSpeedInvader) > 5000) && numUpdatesSpeed < 4){
+            updateInvaderSpeed()
+            CONST.AUDIO_CONST.bonus.play()
+            lastUpdateSpeedInvader = Date.now()
+            numUpdatesSpeed++
+        }
+
         garbageCollect()
     }
     if(STATE.gameState.isPlaying){
@@ -226,6 +243,16 @@ function handleCollision(player){
                 CONST.AUDIO_CONST.hit.play()
                 updateLives()
             }
+        })
+    }
+}
+
+function updateInvaderSpeed(){
+    CONST.INVADER_CONST.speedMultiplier = CONST.INVADER_CONST.speedMultiplier + 0.1
+    CONST.INVADER_CONST.timeBetweenMoves /= CONST.INVADER_CONST.speedMultiplier
+    for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
+        invadersRow.invaderList.forEach((invader) => {
+            invader.velocity *= CONST.INVADER_CONST.speedMultiplier
         })
     }
 }

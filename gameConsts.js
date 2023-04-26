@@ -11,7 +11,9 @@ export const AUDIO_CONST = {
     backgroundMusic: new Audio("./assets/audio/backgroundMusic.wav"),
     explosion: new Audio("./assets/audio/explode.wav"),
     shoot: new Audio("./assets/audio/shoot.wav"),
-    hit: new Audio("./assets/audio/hit.wav")
+    hit: new Audio("./assets/audio/hit.wav"),
+    bonus: new Audio("./assets/audio/bonus.mp3"),
+    gameOver: new Audio("./assets/audio/gameOver.mp3")
 }
 
 // canvas size
@@ -61,23 +63,6 @@ export const PROJECTILE_CONST = {
     }
 }
 
-// projectile const
-export const INVADER_PROJECTILE_CONST = {
-    velocity: {
-        x: 1,
-        y: 4
-    },
-    radius: 3, 
-    color: "red",
-    // in ms
-    timeBetweenShots: 1000,
-    bounds: {
-        left:0,
-        right:CANVAS_SIZE.width,
-        up:0,
-        down:CANVAS_SIZE.height
-    }
-}
 
 // invader size
 export const INVADER_CONST = {
@@ -89,11 +74,28 @@ export const INVADER_CONST = {
     width: 50,
     height: 50,
     velocity: 10,
+    speedMultiplier: 1,
     // in ms
-    timeBetweenMoves: 500,
+    timeBetweenMoves: 500
 }
 
 INVADER_CONST.bounds = {
     left: 0 + 0.5*INVADER_CONST.width,
     right: CANVAS_SIZE.width - INVADER_CONST.width*1.5
 }
+
+
+// ivader projectile const
+export const INVADER_PROJECTILE_CONST = {
+    velocity: 4 * INVADER_CONST.speedMultiplier,
+    radius: 5, 
+    color: "red",
+    bounds: {
+        left:0,
+        right:CANVAS_SIZE.width,
+        up:0,
+        down:CANVAS_SIZE.height
+    }
+}
+
+
