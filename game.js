@@ -6,8 +6,8 @@ import {Invader} from "./invader.js"
 let player;
 let lastShotTime;
 let lastUpdateInvader;
-let lastUpdateSpeedInvader;
-let numUpdatesSpeed;
+let lastSpeedUpdateInvader;
+let numSpeedUpdates;
 
 export function game(){
     
@@ -18,8 +18,8 @@ export function game(){
 
         lastShotTime = Date.now()
         lastUpdateInvader = Date.now()
-        lastUpdateSpeedInvader = Date.now()
-        numUpdatesSpeed = 0
+        lastSpeedUpdateInvader = Date.now()
+        numSpeedUpdates = 0
 
         player = new Player()
         initializeInvaders()
@@ -28,11 +28,6 @@ export function game(){
     let myReq;
 
     function animate(){
-        if (STATE.gameState.time == 0 || STATE.gameState.numLives == 0){
-            if(score != 200)
-                alert("omer hamanyak")
-            STATE.gameState.isPlaying = false
-        }
         if (STATE.gameState.isPlaying){
             myReq = requestAnimationFrame(animate)
         }
@@ -64,14 +59,14 @@ export function game(){
             player.shoot()
             lastShotTime = Date.now()
         }
-        if (((Date.now() - lastUpdateSpeedInvader) > 5000) && numUpdatesSpeed < 4){
+        if (((Date.now() - lastSpeedUpdateInvader) > 5000) && numSpeedUpdates < 4){
             updateInvaderSpeed()
             CONST.AUDIO_CONST.bonus.play()
-            lastUpdateSpeedInvader = Date.now()
-            numUpdatesSpeed++
+            lastSpeedUpdateInvader = Date.now()
+            numSpeedUpdates++
         }
-
         garbageCollect()
+        handleGameOver()
     }
     if(STATE.gameState.isPlaying){
         animate()
@@ -191,6 +186,7 @@ function drawInvaders(){
     }
 }
 
+
 function garbageCollect(){
     STATE.projectileList.forEach((projectile, index) => {
         if(projectile.isOutOfBounds())
@@ -278,4 +274,28 @@ function updateLives(){
         return
     STATE.gameState.numLives--
     document.getElementById('lives').innerHTML = "lives: " + STATE.gameState.numLives
+}
+
+function areAllInvadersDead(){
+    for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
+        if(invadersRow.invaderList.length > 0)
+            return false
+    }
+    return true
+}
+
+function handleGameOver(){
+    if(STATE.gameState.numLives == 0)
+        alert("You Lost")
+    else if (STATE.gameState.time == 0){
+        if(STATE.gameState.score < 100)
+            alert("you can do better")
+        else
+            alert("Winner!")
+    }
+    else if(areAllInvadersDead())
+        alert("Champion!")
+    else
+        return
+    STATE.gameState.isPlaying = false
 }
