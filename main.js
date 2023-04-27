@@ -13,6 +13,7 @@ $(document).ready(function () {
     $("div.game").hide();
     $("div.config").hide();
     $("div.modal").hide();
+    $("div.records").hide();
     isModalShowing = false
 });
 
@@ -47,6 +48,7 @@ $("#navbar_login_button").click(() => showLoginPage());
 $("#navbar_signup_button").click(() => showSignUpPage());
 $("#navbar_about_button").click(() => showModal());
 $("#navbar_logo_button").click(() => showWelcomePage());
+$("#navbar_records_button").click(() => showRecordsPage());
 
 // modal
 $("#close_modal_button_1").click(() => closeModal());
@@ -127,6 +129,7 @@ function showLoginPage(){
     $("div.game").hide();
     $("div.modal").hide();
     $("div.config").hide();
+    $("div.records").hide();
     pauseGame()
 }
 
@@ -137,6 +140,7 @@ function showSignUpPage(){
     $("div.game").hide();
     $("div.modal").hide();
     $("div.config").hide();
+    $("div.records").hide();
     pauseGame()
 }
 
@@ -147,6 +151,7 @@ function showGamePage(){
     $("div.game").show();
     $("div.modal").hide();
     $("div.config").hide();
+    $("div.records").hide();
     if(!STATE.gameState.isStarted){
         startNewGame()
     }
@@ -162,6 +167,7 @@ function showWelcomePage(){
     $("div.game").hide();
     $("div.modal").hide();
     $("div.config").hide();
+    $("div.records").hide();
     pauseGame()
 }
 
@@ -172,6 +178,18 @@ function showConfigPage(){
     $("div.game").hide();
     $("div.modal").hide();
     $("div.config").show();
+    $("div.records").hide();
+    pauseGame()
+}
+
+function showRecordsPage(){
+    $("div.welcome").hide();
+    $("div.login").hide();
+    $("div.signup").hide();
+    $("div.game").hide();
+    $("div.modal").hide();
+    $("div.config").hide();
+    $("div.records").show();
     pauseGame()
 }
 
