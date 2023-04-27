@@ -103,3 +103,11 @@ export const INVADER_PROJECTILE_CONST = {
 }
 
 
+// game const
+export const GAME_CONST = {
+    time: 120,
+    score: 0,
+    numLives: 3
+}
+
+

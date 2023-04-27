@@ -19,11 +19,12 @@ export const invaderList = {
 }
 
 export const gameState = {
-    time: 120,
-    score: 0,
-    numLives: 3,
-    isPlaying: false,
-    isStarted: false
+    time: CONST.GAME_CONST.time,
+    score: CONST.GAME_CONST.score,
+    numLives: CONST.GAME_CONST.numLives,
+    isOver: false,
+    isStopped: false,
+    gameStarted: false
 }  
 
 export const canvas = document.querySelector('canvas');

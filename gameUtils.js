@@ -189,5 +189,15 @@ export function handleGameOver(){
         alert("Champion!")
     else
         return
-    STATE.gameState.isPlaying = false
+    STATE.gameState.isOver = true
+}
+
+
+export function clearGame(){
+    for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
+        invadersRow.invaderList = []
+    }
+    STATE.projectileList.splice(0,STATE.projectileList.length);
+    STATE.invaderProjectileList.splice(0,STATE.invaderProjectileList.length);
+    CONST.INVADER_CONST.speedMultiplier = 1
 }

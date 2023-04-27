@@ -5,6 +5,7 @@ import * as CONST from "./gameConsts.js"
 
 // on load page
 let isModalShowing;
+let onGamePage;
 
 $(document).ready(function () {
     $("div.welcome").show();
@@ -15,6 +16,7 @@ $(document).ready(function () {
     $("div.modal").hide();
     $("div.records").hide();
     isModalShowing = false
+    onGamePage = false
 });
 
 $(document).keyup(function(e) {
@@ -54,6 +56,11 @@ $("#navbar_records_button").click(() => showRecordsPage());
 $("#close_modal_button_1").click(() => closeModal());
 $("#close_modal_button_2").click(() => closeModal());
 
+// game
+$("#new_game_button").click(() => {
+    finishGame();
+    sleep(1000).then(()=>{startNewGame();})
+})
 
 // form submition
 $("form.signup-form").submit((event) => {
@@ -130,7 +137,9 @@ function showLoginPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
+    onGamePage = false
 }
 
 function showSignUpPage(){
@@ -141,7 +150,9 @@ function showSignUpPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
+    onGamePage = false
 }
 
 function showGamePage(){
@@ -152,12 +163,11 @@ function showGamePage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
-    if(!STATE.gameState.isStarted){
+    onGamePage = true
+    if(STATE.gameState.gameStarted)
+        continueGame()
+    else
         startNewGame()
-    }
-    else{
-        showModal()
-    }
 }
 
 function showWelcomePage(){
@@ -168,7 +178,9 @@ function showWelcomePage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
+    onGamePage = false
 }
 
 function showConfigPage(){
@@ -179,7 +191,9 @@ function showConfigPage(){
     $("div.modal").hide();
     $("div.config").show();
     $("div.records").hide();
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
+    onGamePage = false
 }
 
 function showRecordsPage(){
@@ -190,33 +204,44 @@ function showRecordsPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").show();
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
+    onGamePage = false
 }
 
 function showModal(){
     $("div.modal").show();
     isModalShowing = true
-    pauseGame()
+    if(STATE.gameState.gameStarted && onGamePage)
+        pauseGame()
 }
 
 function closeModal(){
     $("div.modal").hide();
     isModalShowing = false
-    if(STATE.gameState.isStarted)
+    if(STATE.gameState.gameStarted && onGamePage)
         continueGame()
 }
 
 function startNewGame(){
-    STATE.gameState.isPlaying = true
-    STATE.gameState.isStarted = true
+    STATE.gameState.isOver = false
+    STATE.gameState.gameStarted = false
     setTimeout(game, 2000);
+}
+
+function finishGame(){
+    STATE.gameState.isOver = true
 }
 
 function pauseGame(){
-    STATE.gameState.isPlaying = false
+    STATE.gameState.isStopped = true
 }
 
 function continueGame(){
-    STATE.gameState.isPlaying = true
+    STATE.gameState.isStopped = false
     setTimeout(game, 2000);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

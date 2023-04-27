@@ -3,48 +3,73 @@ import * as STATE from "./gameState.js"
 import * as UTILS from "./gameUtils.js"
 import {Player} from "./player.js"
 
+
 let player;
 let lastShotTime;
 let lastUpdateInvader;
 let lastSpeedUpdateInvader;
 let numSpeedUpdates;
+let myReq;
 
 export function game(){
 
-    
-    let intervalID = setInterval(UTILS.updateTimer, 1000);
     CONST.AUDIO_CONST.backgroundMusic.play()
 
-    if (!STATE.gameState.gameStarted){
+    if(!STATE.gameState.gameStarted){ 
+        STATE.gameState.numLives = CONST.GAME_CONST.numLives
+        STATE.gameState.score = CONST.GAME_CONST.score
+        STATE.gameState.time = CONST.GAME_CONST.time
+
+        player = new Player()
 
         lastShotTime = Date.now()
         lastUpdateInvader = Date.now()
         lastSpeedUpdateInvader = Date.now()
-        numSpeedUpdates = 0
 
-        player = new Player()
+        numSpeedUpdates = 0
         UTILS.initializeInvaders()
         STATE.gameState.gameStarted = true
     }
-    let myReq;
+
+    let intervalID = setInterval(UTILS.updateTimer, 1000);
 
     function animate(){
-        if (STATE.gameState.isPlaying){
-            myReq = requestAnimationFrame(animate)
-        }
-        else{
+        if(STATE.gameState.isStopped){
             clearInterval(intervalID)
+            
             CONST.AUDIO_CONST.backgroundMusic.pause()
             CONST.AUDIO_CONST.shoot.pause()
             CONST.AUDIO_CONST.bonus.pause()
             CONST.AUDIO_CONST.explosion.pause()
             CONST.AUDIO_CONST.hit.pause()
 
-            CONST.AUDIO_CONST.gameOver.play()
             cancelAnimationFrame(myReq)
             removeEventListener("keydown", func1)
             removeEventListener("keyup", func2)
+
+            return
         }
+        else
+            myReq = requestAnimationFrame(animate)
+    
+        if (STATE.gameState.isOver){
+            clearInterval(intervalID)
+            
+            CONST.AUDIO_CONST.backgroundMusic.pause()
+            CONST.AUDIO_CONST.shoot.pause()
+            CONST.AUDIO_CONST.bonus.pause()
+            CONST.AUDIO_CONST.explosion.pause()
+            CONST.AUDIO_CONST.hit.pause()
+            CONST.AUDIO_CONST.gameOver.play()
+
+            cancelAnimationFrame(myReq)
+            removeEventListener("keydown", func1)
+            removeEventListener("keyup", func2)
+
+            UTILS.clearGame()
+            return
+        }
+
         STATE.ctx.fillStyle = "black"
         STATE.ctx.fillRect(0, 0, STATE.canvas.width, STATE.canvas.height)
         player.update()
@@ -69,9 +94,8 @@ export function game(){
         UTILS.garbageCollect()
         UTILS.handleGameOver()
     }
-    if(STATE.gameState.isPlaying){
-        animate()
-    }
+    animate()
+    
 
     function func1(event){
         event.preventDefault()
