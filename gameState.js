@@ -24,7 +24,8 @@ export const gameState = {
     numLives: CONST.GAME_CONST.numLives,
     isOver: false,
     isStopped: false,
-    gameStarted: false
+    gameStarted: false,
+    user: null
 }  
 
 export const canvas = document.querySelector('canvas');
@@ -32,4 +33,3 @@ canvas.width = CONST.CANVAS_SIZE.width
 canvas.height = CONST.CANVAS_SIZE.height
 
 export const ctx = canvas.getContext("2d")
-

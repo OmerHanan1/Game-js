@@ -104,7 +104,8 @@ function onSubmitLoginForm(){
         if (username === user.username){
             if (password === user.password){
                 alert("loged in successfully")
-                showConfigPage()           
+                STATE.gameState.user = username           
+                showConfigPage()
             }
             else{
                 alert("password is incorrect")
