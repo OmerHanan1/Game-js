@@ -34,3 +34,7 @@ Ben Gurion University,
 ### Configurations
 > Each player can choose his/hers projectile color before the game starts:
 ![](/assets/game_configuration.png)
+
+### Records table
+> By clicking `Records table` button in the buttom of the game, player be moved to the "Records Table" page.
+![](/assets/records_table.png)
