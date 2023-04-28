@@ -81,6 +81,8 @@ $("form.signup-form").submit((event) => {
 $("form.login-form").submit((event) => {
     event.preventDefault();
     onSubmitLoginForm();
+    const tableBody = document.querySelector('#records-table tbody');
+    tableBody.innerHTML = '';
     return false;
 });
 
