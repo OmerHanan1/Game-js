@@ -67,6 +67,10 @@ $("#records-table-button").click(() =>
     showRecordsPage();
 })
 
+$("#back-to-game-button").click(() => {
+    showGamePage();
+})
+
 // form submition
 $("form.signup-form").submit((event) => {
     event.preventDefault();
