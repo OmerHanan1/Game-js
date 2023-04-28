@@ -31,8 +31,8 @@ export const SPACESHIP_CONST = {
     width: 120,
     height: 80,
     startingPosition: {
-        x: 575,
-        y: 500
+        x: 550,
+        y: 450
     },
     speed: {
         x: 4,

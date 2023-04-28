@@ -112,10 +112,14 @@ export function handleCollision(player){
                 down: position.y + CONST.SPACESHIP_CONST.height
             }
             if((projectile.position.x < playerLocation.right) && (projectile.position.x > playerLocation.left) &&
-            (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){
+            (projectile.position.y > playerLocation.up) &&(projectile.position.y < playerLocation.down)){                
                 STATE.invaderProjectileList.splice(projectileIndex, 1)
-                CONST.AUDIO_CONST.hit.play()
                 updateLives()
+                CONST.AUDIO_CONST.hit.play()
+                if (STATE.gameState.numLives != 0){
+                    player.position = {x: 550, y: 450}
+                    player.draw()
+                }
             }
         })
     }
@@ -217,8 +221,9 @@ export function handleGameOver(){
         time: STATE.gameState.time,
         lives: STATE.gameState.numLives
     }    
-    // const table = document.getElementById('records-table')
     addRowToRecordsTable(GameOverStatus.user, GameOverStatus.score, GameOverStatus.time, GameOverStatus.lives)
+    STATE.gameState.numLives = 3
+    document.getElementById('lives').innerHTML = "lives: " + STATE.gameState.numLives
 }
 
 function addRowToRecordsTable(username, score, time, numLives)
