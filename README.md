@@ -8,3 +8,27 @@ Ben Gurion University,
 
 ---
 
+## Project components
+- Welcome page.
+- Sign up page with constraints.
+- Login page.
+- About the authors modal.
+- Web game.
+
+---
+
+## About the game
+
+### Enemies
+> Each row contains deofferent type of invaders. \
+> Each invader type have different value, and different look. \
+> ![](/assets/invaders_page1.png)
+<b>Note:</b> The enemies become faster and faster!
+
+### Moving abilities
+> Enemies can move to the sides. \
+> Player can move to <b>any direction</b>.
+> Player's projectiles move regarding to Player's moving direction!!!
+![](/assets/moving_abilities.png)
+
+
