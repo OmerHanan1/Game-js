@@ -15,6 +15,7 @@ $(document).ready(function () {
     $("div.config").hide();
     $("div.modal").hide();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     isModalShowing = false
     onGamePage = false
 });
@@ -50,7 +51,6 @@ $("#navbar_login_button").click(() => showLoginPage());
 $("#navbar_signup_button").click(() => showSignUpPage());
 $("#navbar_about_button").click(() => showModal());
 $("#navbar_logo_button").click(() => showWelcomePage());
-$("#navbar_records_button").click(() => showRecordsPage());
 
 // modal
 $("#close_modal_button_1").click(() => closeModal());
@@ -60,6 +60,15 @@ $("#close_modal_button_2").click(() => closeModal());
 $("#new_game_button").click(() => {
     finishGame();
     sleep(1000).then(()=>{startNewGame();})
+})
+$("#records-table-button").click(() => 
+{
+    finishGame();
+    showRecordsPage();
+})
+
+$("#back-to-game-button").click(() => {
+    showGamePage();
 })
 
 // form submition
@@ -104,7 +113,8 @@ function onSubmitLoginForm(){
         if (username === user.username){
             if (password === user.password){
                 alert("loged in successfully")
-                showConfigPage()           
+                STATE.gameState.user = username           
+                showConfigPage()
             }
             else{
                 alert("password is incorrect")
@@ -137,6 +147,7 @@ function showLoginPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     if(STATE.gameState.gameStarted && onGamePage)
         pauseGame()
     onGamePage = false
@@ -150,6 +161,7 @@ function showSignUpPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     if(STATE.gameState.gameStarted && onGamePage)
         pauseGame()
     onGamePage = false
@@ -163,6 +175,7 @@ function showGamePage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     onGamePage = true
     if(STATE.gameState.gameStarted)
         continueGame()
@@ -178,6 +191,7 @@ function showWelcomePage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     if(STATE.gameState.gameStarted && onGamePage)
         pauseGame()
     onGamePage = false
@@ -191,6 +205,7 @@ function showConfigPage(){
     $("div.modal").hide();
     $("div.config").show();
     $("div.records").hide();
+    $("div.game-over-modal").hide();
     if(STATE.gameState.gameStarted && onGamePage)
         pauseGame()
     onGamePage = false
@@ -204,6 +219,7 @@ function showRecordsPage(){
     $("div.modal").hide();
     $("div.config").hide();
     $("div.records").show();
+    $("div.game-over-modal").hide();
     if(STATE.gameState.gameStarted && onGamePage)
         pauseGame()
     onGamePage = false

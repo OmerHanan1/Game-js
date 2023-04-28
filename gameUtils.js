@@ -2,6 +2,7 @@ import * as CONST from "./gameConsts.js"
 import * as STATE from "./gameState.js"
 import {Invader} from "./invader.js"
 
+export let records = []
 
 export function initializeInvaders(){
     let j = 0
@@ -178,20 +179,70 @@ export function areAllInvadersDead(){
 
 export function handleGameOver(){
     if(STATE.gameState.numLives == 0)
-        alert("You Lost")
+        alert("You Lost \
+        \
+        \nScore: " + STATE.gameState.score + "\
+        \nTime: " + STATE.gameState.time + "\
+        \nLives: " + STATE.gameState.numLives)
+
     else if (STATE.gameState.time == 0){
         if(STATE.gameState.score < 100)
-            alert("you can do better")
+            alert("you can do better \
+            \
+            \nScore: " + STATE.gameState.score + "\
+            \nTime: " + STATE.gameState.time + "\
+            \nLives: " + STATE.gameState.numLives)
         else
-            alert("Winner!")
+            alert("Winner! \
+            \
+            \nScore: " + STATE.gameState.score + "\
+            \nTime: " + STATE.gameState.time + "\
+            \nLives: " + STATE.gameState.numLives)
     }
     else if(areAllInvadersDead())
-        alert("Champion!")
+    {
+        alert("Champion! \
+        \
+        \nScore: " + STATE.gameState.score + "\
+        \nTime: " + STATE.gameState.time + "\
+        \nLives: " + STATE.gameState.numLives)
+    }
     else
         return
     STATE.gameState.isOver = true
+
+    let GameOverStatus = {
+        user: STATE.gameState.user,
+        score: STATE.gameState.score,
+        time: STATE.gameState.time,
+        lives: STATE.gameState.numLives
+    }    
+    // const table = document.getElementById('records-table')
+    addRowToRecordsTable(GameOverStatus.user, GameOverStatus.score, GameOverStatus.time, GameOverStatus.lives)
 }
 
+function addRowToRecordsTable(username, score, time, numLives)
+{
+    const tableBody = document.querySelector('#records-table tbody');
+    const newRow = document.createElement('tr');
+
+    const userCell = document.createElement('td');
+    const scoreCell = document.createElement('td');
+    const livesCell = document.createElement('td');
+    const timeCell = document.createElement('td');
+
+    userCell.textContent = username;
+    scoreCell.textContent = score;
+    timeCell.textContent = time;
+    livesCell.textContent = numLives;
+
+    newRow.appendChild(userCell);
+    newRow.appendChild(scoreCell);
+    newRow.appendChild(livesCell);
+    newRow.appendChild(timeCell);
+
+    tableBody.appendChild(newRow);
+}
 
 export function clearGame(){
     for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {

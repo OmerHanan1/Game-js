@@ -24,7 +24,7 @@
         <li><a id="navbar_about_button">About</a></li>
         <li><a id="navbar_signup_button">SignUp</a></li>
         <li><a id="navbar_login_button">Login</a></li>
-        <li><a id="navbar_records_button">Records</a></li>
+        <!-- <li><a id="navbar_records_button">Records</a></li> -->
       </ul>
     </div>
     <div class="content">
@@ -193,13 +193,35 @@
         <div class="gameCanvas">
           <canvas id="gameCanvas"></canvas>
         </div>
-        <button id="new_game_button" class="btn btn-light">
-          new game
-        </button>
+        <div class="modal-footer">
+          <button id="new_game_button" class="btn btn-light">
+            New Game
+          </button>
+          <button id="records-table-button" class="btn btn-light">
+            Records Table
+          </button>
+          </div>
       </div>
+      <!-- Records -->
       <div class="records">
         <h1>Records</h1>
-        <p>Hi</p>
+        <table id="records-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Score</th>
+              <th>Lives</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows will be added dynamically -->
+          </tbody>
+        </table>
+        <div class="modal-footer">
+          <button id="back-to-game-button" class="btn btn-light">
+            Back to Game
+          </button>
       </div>
     </div>
     <hr class="rounded" />
