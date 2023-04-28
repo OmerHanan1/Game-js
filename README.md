@@ -6,6 +6,12 @@ Ben Gurion University,
 # Website link:
 [Our Project](https://web-development-environments-2023.github.io/assignment2-208055616_316099159/)
 
+Default account: 
+```
+Username: `p`
+Password: `testuser`
+```
+
 ---
 
 ## Project components
