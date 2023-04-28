@@ -31,4 +31,6 @@ Ben Gurion University,
 > Player's projectiles move regarding to Player's moving direction!!!
 ![](/assets/moving_abilities.png)
 
-
+### Configurations
+> Each player can choose his/hers projectile color before the game starts:
+![](/assets/game_configuration.png)
