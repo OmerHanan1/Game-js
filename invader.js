@@ -3,8 +3,15 @@ import * as STATE from "./gameState.js"
 import { InvaderProjectile } from "./InvaderProjectile.js"
 
 export class Invader { 
-    constructor(position){
-        this.img = CONST.INVADER_IMAGE
+    constructor(position, row){
+        if(row == 0)
+            this.img = CONST.FIRST_ROW_INVADER
+        else if(row == 1)
+            this.img = CONST.SECOND_ROW_INVADER
+        else if(row == 2)
+            this.img = CONST.THIRD_ROW_INVADER
+        else
+            this.img = CONST.FOURTH_ROW_INVADER
         this.position = position
         this.width = CONST.INVADER_CONST.width
         this.height = CONST.INVADER_CONST.height

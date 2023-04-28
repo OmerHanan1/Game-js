@@ -12,7 +12,7 @@ export function initializeInvaders(){
                 x: CONST.INVADER_CONST.startingPosition.x + i*CONST.INVADER_CONST.width,
                 y: CONST.INVADER_CONST.startingPosition.y - j*CONST.INVADER_CONST.height
             } 
-            invadersRow.invaderList.push(new Invader(startingPosition))
+            invadersRow.invaderList.push(new Invader(startingPosition, j))
         }
         j++
     }

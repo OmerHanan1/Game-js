@@ -4,8 +4,17 @@ export const SPACESHIP_IMAGE = new Image()
 SPACESHIP_IMAGE.src = "./assets/spaceship_1_no_background.png"
 
 // invader image
-export const INVADER_IMAGE = new Image()
-INVADER_IMAGE.src = "./assets/invader.png"
+export const FIRST_ROW_INVADER = new Image()
+FIRST_ROW_INVADER.src = "./assets/invader.png"
+
+export const SECOND_ROW_INVADER = new Image()
+SECOND_ROW_INVADER.src = "./assets/alien_enemy_1_no_background.png"
+
+export const THIRD_ROW_INVADER = new Image()
+THIRD_ROW_INVADER.src = "./assets/alien_enemy_2_nobg.png"
+
+export const FOURTH_ROW_INVADER = new Image()
+FOURTH_ROW_INVADER.src = "./assets/spaceship_2_nobg.png"
 
 // audio const
 export const AUDIO_CONST = {
