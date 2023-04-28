@@ -1,6 +1,7 @@
 // spaceship image
 export const SPACESHIP_IMAGE = new Image()
-SPACESHIP_IMAGE.src = "./assets/spaceship.png"
+// SPACESHIP_IMAGE.src = "./assets/spaceship.png"
+SPACESHIP_IMAGE.src = "./assets/spaceship_1_no_background.png"
 
 // invader image
 export const INVADER_IMAGE = new Image()
@@ -27,8 +28,8 @@ export const CANVAS_SIZE = {
 // spaceship const
 export const SPACESHIP_CONST = {
     shootingKey: " ",
-    width: 75,
-    height: 50,
+    width: 120,
+    height: 80,
     startingPosition: {
         x: 575,
         y: 500
