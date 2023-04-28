@@ -190,8 +190,16 @@ export function handleGameOver(){
     else
         return
     STATE.gameState.isOver = true
-}
 
+    let GameOverStatus = {
+        score: STATE.gameState.score,
+        time: STATE.gameState.time,
+        lives: STATE.gameState.numLives,
+        user: STATE.gameState.user
+    }
+
+    
+}
 
 export function clearGame(){
     for(const [key, invadersRow] of Object.entries(STATE.invaderList)) {
