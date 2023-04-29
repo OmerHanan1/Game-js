@@ -17,6 +17,7 @@ export function game(){
 
     if(!STATE.gameState.gameStarted){ 
         STATE.gameState.numLives = CONST.GAME_CONST.numLives
+        document.getElementById('lives').innerHTML = "lives: " + STATE.gameState.numLives
         STATE.gameState.score = CONST.GAME_CONST.score
         STATE.gameState.time = CONST.GAME_CONST.time
 

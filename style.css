@@ -293,18 +293,12 @@ select {
   text-align: center;
 }
 
-.footer p{
+.footer p {
   line-height: 20px;
 }
 
-.footer li{
+.footer li {
   line-height: 20px;
-}
-
-/* Rounded border */
-hr.rounded {
-  border-top: 8px solid rgb(207, 223, 224);
-  border-radius: 5px;
 }
 
 .modal-content {
@@ -321,5 +315,3 @@ hr.rounded {
   align-items: left;
   justify-content: center;
 }
-
-

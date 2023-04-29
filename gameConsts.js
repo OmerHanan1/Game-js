@@ -93,6 +93,7 @@ export const INVADER_CONST = {
     timeBetweenMoves: 500
 }
 
+
 INVADER_CONST.bounds = {
     left: 0 + 0.5*INVADER_CONST.width,
     right: CANVAS_SIZE.width - INVADER_CONST.width*1.5

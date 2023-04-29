@@ -222,8 +222,6 @@ export function handleGameOver(){
         lives: STATE.gameState.numLives
     }    
     addRowToRecordsTable(GameOverStatus.user, GameOverStatus.score, GameOverStatus.time, GameOverStatus.lives)
-    STATE.gameState.numLives = 3
-    document.getElementById('lives').innerHTML = "lives: " + STATE.gameState.numLives
 }
 
 function addRowToRecordsTable(username, score, time, numLives)
@@ -256,4 +254,8 @@ export function clearGame(){
     STATE.projectileList.splice(0,STATE.projectileList.length);
     STATE.invaderProjectileList.splice(0,STATE.invaderProjectileList.length);
     CONST.INVADER_CONST.speedMultiplier = 1
+    CONST.INVADER_CONST.timeBetweenMoves = 500
+    for(const [key, keyState] of Object.entries(STATE.keyPressedState)) {
+        STATE.keyPressedState[key] = false
+    }
 }

@@ -61,9 +61,7 @@ $("#new_game_button").click(() => {
     finishGame();
     sleep(1000).then(()=>{startNewGame();})
 })
-$("#records-table-button").click(() => 
-{
-    finishGame();
+$("#records-table-button").click(() => {
     showRecordsPage();
 })
 
@@ -248,14 +246,17 @@ function startNewGame(){
 }
 
 function finishGame(){
+    console.log("finished")
     STATE.gameState.isOver = true
 }
 
 function pauseGame(){
+    console.log("paused")
     STATE.gameState.isStopped = true
 }
 
 function continueGame(){
+    console.log("continued")
     STATE.gameState.isStopped = false
     setTimeout(game, 2000);
 }
