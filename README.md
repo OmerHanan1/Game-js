@@ -1,6 +1,9 @@
 # Web development course
-Ben Gurion University,
-2023.
+### Authors:
+  Amit Chen, \
+  Omer Hanan. \
+<b>Ben Gurion University,
+2023. </b>
 
 ---
 # Website link:
